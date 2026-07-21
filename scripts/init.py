@@ -82,7 +82,9 @@ def main() -> int:
   if not any(Path("scripts").iterdir()):
     shutil.rmtree("scripts")
 
-  print("\nInitialized. Run 'uv sync' to refresh the lockfile, review the diff, then commit. See the README 'Repository settings' section for the manual GitHub steps.")
+  print(
+    "\nInitialized. Run 'uv sync' to refresh the lockfile, review the diff, then commit. See the README 'Repository settings' section for the manual GitHub steps."
+  )
   return 0
 
 
