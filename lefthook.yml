@@ -1,0 +1,33 @@
+pre-commit:
+  parallel: true
+  commands:
+    format:
+      glob: "*.py"
+      run: uv run ruff format {staged_files}
+      stage_fixed: true
+    lint:
+      glob: "*.py"
+      run: uv run ruff check --fix {staged_files}
+      stage_fixed: true
+    gitleaks:
+      run: |
+        if command -v gitleaks >/dev/null 2>&1; then
+          gitleaks git --pre-commit --redact --staged --verbose
+        else
+          echo "gitleaks not installed, skipping secret scan"
+        fi
+
+commit-msg:
+  commands:
+    commitizen:
+      run: uv run cz check --commit-msg-file {1}
+
+pre-push:
+  parallel: false
+  commands:
+    typecheck:
+      run: uv run mypy
+    test:
+      run: uv run pytest
+    build:
+      run: uv build
