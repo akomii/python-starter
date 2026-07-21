@@ -68,7 +68,7 @@ def main() -> int:
     text = path.read_text(encoding="utf-8")
     for token in TOKENS:
       text = text.replace(token, values[token])
-    text = text.replace(f'[{{ name = "{{{{AUTHOR}}}}" }}]', authors_value(author))
+    text = text.replace('[{ name = "{{AUTHOR}}" }]', authors_value(author))
     text = text.replace(PLACEHOLDER_DIST, dist_name).replace(PLACEHOLDER_MODULE, module_name)
     path.write_text(text, encoding="utf-8")
 
@@ -83,7 +83,8 @@ def main() -> int:
     shutil.rmtree("scripts")
 
   print(
-    "\nInitialized. Run 'uv sync' to refresh the lockfile, review the diff, then commit. See the README 'Repository settings' section for the manual GitHub steps."
+    "\nInitialized. Run 'uv sync' to refresh the lockfile, review the diff, then commit."
+    " See the README 'Repository settings' section for the manual GitHub steps."
   )
   return 0
 
