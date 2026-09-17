@@ -1,3 +1,12 @@
+# Shared hooks: data file guard, large files, commit size, commit message.
+# Change git_url and ref to use another source or pin a version.
+remotes:
+  - git_url: https://github.com/aktin/aktin-github-scripts
+    ref: main
+    refetch_frequency: 24h
+    configs:
+      - hooks/lefthook.yml
+
 pre-commit:
   parallel: true
   commands:
@@ -16,11 +25,6 @@ pre-commit:
         else
           echo "gitleaks not installed, skipping secret scan"
         fi
-
-commit-msg:
-  commands:
-    commitizen:
-      run: uv run cz check --commit-msg-file {1}
 
 pre-push:
   parallel: false

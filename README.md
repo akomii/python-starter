@@ -24,7 +24,7 @@
 
 ## Stack
 
-uv-managed Python package (src layout), ruff for linting and formatting, mypy strict, pytest with coverage gate, lefthook + commitizen, tag-driven releases via git-cliff, and a hardened GitHub Actions pipeline (CI, CodeQL, Scorecard, dependency review, SBOM, build attestations).
+uv-managed Python package (src layout), ruff for linting and formatting, mypy strict, pytest with coverage gate, lefthook with shared hooks from aktin-github-scripts, tag-driven releases via git-cliff, and a hardened GitHub Actions pipeline (CI, CodeQL, Scorecard, dependency review, SBOM, build attestations).
 
 ## Getting started
 
@@ -67,7 +67,7 @@ Generating a repo from a template copies files and branches only, never settings
 | ruff | Owns linting and formatting | One tool, no rule conflicts |
 | mypy strict | Type checks `src` and `tests` | Keeps the package honest from day one |
 | pytest + coverage | Unit tests with an 80% line gate (`fail_under`) | Regressions surface locally and in CI |
-| lefthook + commitizen | pre-commit formats and lints staged files and runs gitleaks when installed, commit-msg enforces Conventional Commits, pre-push runs typecheck, test, build | Catch problems locally, keep history parseable for the changelog |
+| lefthook + shared hooks | pre-commit formats and lints staged files, runs gitleaks when installed and the shared hooks from aktin-github-scripts (data files, large files, commit size), commit-msg enforces Conventional Commits via the shared hook, pre-push runs typecheck, test, build | Catch problems locally, keep history parseable for the changelog |
 | CI | `ci.yml` calls the reusable `verify.yml` on push and PR, cancels superseded runs, least-privilege token | Fast, safe feedback |
 | Security scans | CodeQL, dependency-review, OpenSSF Scorecard, secret scanning, all surfaced in the Security tab | Catch code and supply-chain issues early |
 | Releases | Tag `vX.Y.Z` triggers git-cliff changelog and notes, version bump committed back, CycloneDX SBOM, SLSA attestations, sdist + wheel attached to the Release | Reproducible, auditable releases from commit history |
