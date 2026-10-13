@@ -9,7 +9,7 @@ import sys
 from pathlib import Path
 
 TOKENS = ("{{PROJECT_NAME}}", "{{REPO_SLUG}}", "{{DESCRIPTION}}", "{{OWNER}}")
-FILES = ("pyproject.toml", "README.md", "NOTICE", ".github/CODEOWNERS", "tests/test_greet.py")
+FILES = ("pyproject.toml", "README.md", "NOTICE", "SECURITY.md", ".github/CODEOWNERS", "tests/test_greet.py")
 PLACEHOLDER_DIST = "python-starter"
 PLACEHOLDER_MODULE = "python_starter"
 

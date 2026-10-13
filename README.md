@@ -91,5 +91,6 @@ Generating a repo from a template copies files and branches only, never settings
 src/python_starter/ the package (renamed by init.py)
 tests/              pytest suite
 .github/workflows/  CI, CodeQL, Scorecard, dependency-review, release
+SECURITY.md          how to report a vulnerability
 scripts/init.py     one-time template initializer (removed after first run)
 ```
