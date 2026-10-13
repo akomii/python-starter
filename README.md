@@ -28,6 +28,8 @@ uv-managed Python package (src layout), ruff for linting and formatting, mypy st
 
 ## Getting started
 
+Prerequisites: [uv](https://docs.astral.sh/uv/) on PATH (it installs the interpreter pinned in `.python-version`). The shared git hooks are Python scripts and need `python3` on PATH.
+
 ```sh
 uv sync                  # deps + venv
 uv run lefthook install  # git hooks (one-time)
@@ -38,7 +40,15 @@ uv run ruff format .     # format
 uv build                 # sdist + wheel
 ```
 
-Commits must follow [Conventional Commits](https://www.conventionalcommits.org) (enforced on commit). Cut a release by pushing a `vX.Y.Z` tag.
+The coverage report lands in `htmlcov/index.html`.
+
+Commits must follow [Conventional Commits](https://www.conventionalcommits.org), enforced by the commit-msg hook:
+
+```
+<type>(<optional scope>): <subject>
+```
+
+Allowed types are `feat fix docs style refactor perf test chore`, the subject starts lowercase and has no trailing period, the header stays at most 100 characters. Cut a release by pushing a `vX.Y.Z` tag.
 
 ## Repository settings
 
