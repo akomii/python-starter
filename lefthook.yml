@@ -1,3 +1,5 @@
+min_version: 2.0.5
+
 # Shared hooks: data file guard, large files, commit size, commit message.
 # Change git_url and ref to use another source or pin a version.
 remotes:
