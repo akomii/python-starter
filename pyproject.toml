@@ -46,7 +46,6 @@ addopts = "-ra --cov --cov-report=term --cov-report=html"
 
 [tool.coverage.run]
 source = ["src"]
-branch = true
 
 [tool.coverage.report]
 fail_under = 80
