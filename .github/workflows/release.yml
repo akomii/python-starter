@@ -24,29 +24,18 @@ jobs:
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
-          ref: main
+          persist-credentials: false
           fetch-depth: 0
       - uses: astral-sh/setup-uv@94527f2e458b27549849d47d273a16bec83a01e9 # v7
       - run: uv sync --frozen
       - name: Sync project version to tag
         run: uv version "${GITHUB_REF_NAME#v}"
-      - name: Update CHANGELOG.md
-        uses: orhun/git-cliff-action@f50e11560dce63f7c33227798f90b924471a88b5 # v4
-        with:
-          config: cliff.toml
-          args: --output CHANGELOG.md
       - name: Generate release notes
         id: notes
         uses: orhun/git-cliff-action@f50e11560dce63f7c33227798f90b924471a88b5 # v4
         with:
           config: cliff.toml
           args: --latest --strip all
-      - name: Commit changelog and version bump
-        uses: stefanzweifel/git-auto-commit-action@b863ae1933cb653a53c021fe36dbb774e1fb9403 # v5
-        with:
-          commit_message: "chore(release): ${{ github.ref_name }} [skip ci]"
-          file_pattern: "CHANGELOG.md pyproject.toml uv.lock"
-          branch: main
       - name: Build distributions
         run: uv build
       - name: Generate SBOM
