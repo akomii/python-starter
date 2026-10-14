@@ -56,15 +56,17 @@ Generating a repo from a template copies files and branches only, never settings
 
 | Setting | Where and what to do | Why |
 | --- | --- | --- |
-| Branch ruleset on `main` | Settings → Rules → Rulesets. New branch ruleset targeting `main`: require a pull request, require the `CI` check, block force pushes | Keeps unreviewed or broken code off `main` |
-| Tag ruleset on `v*` | Same screen, new tag ruleset targeting `v*`, restrict creation to maintainers | Releases are tag-driven, without the rule anyone with push access can cut one |
-| Workflow permissions | Settings → Actions → General → Read and write | The release workflow creates the GitHub Release and uploads the attestations |
+| Branch ruleset on `main` | Settings → Rules → Rulesets. New branch ruleset `default` targeting the default branch: restrict deletions, block force pushes, require signed commits, require a pull request (1 approval, code owner review, dismiss stale approvals on push, approval of the most recent push, all conversations resolved, squash only), require the status checks `verify / verify` and `review`, require CodeQL code scanning results (security alerts high or higher, alerts errors) | Keeps unreviewed, unsigned or broken code off `main` |
+| Tag ruleset on `v*` | Same screen, new tag ruleset `release-tags` targeting `refs/tags/v*`: restrict creations, updates and deletions, bypass for admins and maintainers only | Releases are tag-driven, without the rule anyone with push access can cut one |
+| Workflow permissions | Settings → Actions → General → Read repository contents and packages permissions, do not allow GitHub Actions to create or approve pull requests | Every workflow declares its own `permissions`, the release workflow requests `contents: write` itself |
 | Fork PR approval | Settings → Actions → General, require approval for outside collaborators | Keeps untrusted fork code from running workflows before a maintainer has looked |
-| Merge settings | Settings → General → Pull Requests. Allow squash merging only, default the commit message to the PR title, auto-delete head branches | One conventional subject per PR lands on `main`, which is what git-cliff reads for the release notes |
+| Merge settings | Settings → General → Pull Requests. Allow squash merging only, default to the pull request title with a blank message, always suggest updating pull request branches, auto-delete head branches | One conventional subject per PR lands on `main`, which is what git-cliff reads for the release notes |
+| Commit sign-off | Settings → General, require contributors to sign off on web-based commits | Commits made in the browser carry the same attribution as local ones |
 | Code scanning | Runs from `codeql.yml`, keep "Default setup" off in Settings → Code security | Default setup conflicts with the advanced workflow, private repos need GitHub Advanced Security for the alerts to appear |
 | Secret scanning + push protection | Settings → Code security, on by default for public repos | Blocks committed credentials |
 | Dependabot alerts | Settings → Code security, enable Dependabot alerts and security updates | `dependabot.yml` only schedules version updates, the vulnerability alerts and auto-fix PRs are separate toggles |
 | Private vulnerability reporting | Settings → Code security, enable | Gives researchers a private channel instead of a public issue |
+| Labels | Issues → Labels. Delete `duplicate` and `invalid`, add `critical` (`B60205`, "Blocking release or core functionality") and `minor` (`FEF2C0`, "Low impact issue") | Same triage labels in every repo |
 | Template toggle | Leave "Template repository" off if this repo was made from the template | Prevents re-templating |
 | Housekeeping | Settings → General. Set description and topics, untick Wikis and Projects if unused | Discoverability, fewer places for stale content |
 
