@@ -1,6 +1,7 @@
 min_version: 2.0.5
 
-# Shared hooks: data file guard, large files, commit size, commit message.
+# All hooks come from the shared config: the language independent ones from
+# hooks/lefthook.yml, format, lint and pre-push from the Python profile.
 # Change git_url and ref to use another source or pin a version.
 remotes:
   - git_url: https://github.com/aktin/aktin-github-scripts
@@ -8,31 +9,4 @@ remotes:
     refetch_frequency: 24h
     configs:
       - hooks/lefthook.yml
-
-pre-commit:
-  parallel: true
-  commands:
-    format:
-      glob: "*.py"
-      run: uv run ruff format {staged_files}
-      stage_fixed: true
-    lint:
-      glob: "*.py"
-      run: uv run ruff check --fix {staged_files}
-      stage_fixed: true
-    gitleaks:
-      run: |
-        if command -v gitleaks >/dev/null 2>&1; then
-          gitleaks git --pre-commit --redact --staged --verbose
-        else
-          echo "gitleaks not installed, skipping secret scan"
-        fi
-
-pre-push:
-  commands:
-    typecheck:
-      run: uv run mypy
-    test:
-      run: uv run pytest
-    build:
-      run: uv build
+      - hooks/lefthook-python.yml
