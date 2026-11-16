@@ -118,3 +118,7 @@ tests/              pytest suite
 SECURITY.md          security policy
 scripts/init.py     one-time template initializer (removed after first run)
 ```
+
+## License
+
+Apache-2.0. See [LICENSE](./LICENSE) and [NOTICE](./NOTICE).
